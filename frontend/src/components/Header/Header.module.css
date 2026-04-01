@@ -1,0 +1,46 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background: rgba(26, 29, 36, 0.4);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border-color);
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+
+.logoContainer {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logoSvg {
+  width: 28px;
+  height: 28px;
+  color: var(--brand-primary);
+  filter: drop-shadow(0 0 10px rgba(74, 144, 226, 0.4));
+}
+
+.title {
+  font-size: 1.1rem;
+  font-weight: 300;
+  letter-spacing: -0.2px;
+  margin: 0;
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+}
+
+.title strong {
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.nav {
+  display: flex;
+  gap: 16px;
+}

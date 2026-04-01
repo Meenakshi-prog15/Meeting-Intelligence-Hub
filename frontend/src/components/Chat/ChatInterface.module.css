@@ -1,0 +1,224 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  height: 500px;
+  background: rgba(26, 29, 36, 0.6);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+}
+
+.emptyContainer {
+    display: flex;
+    flex-direction: column;
+    height: 500px;
+    background: rgba(26, 29, 36, 0.3);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    align-items: center;
+    justify-content: center;
+}
+
+.locked {
+    text-align: center;
+    color: var(--text-secondary);
+    opacity: 0.7;
+}
+
+.iconLocked {
+    margin-bottom: 1rem;
+    color: var(--text-placeholder);
+}
+
+.header {
+  padding: 0.75rem 1rem;
+  background: rgba(15, 17, 21, 0.5);
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header h3 {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.status {
+  font-size: 0.8rem;
+  color: var(--brand-accent);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.status::before {
+  content: '';
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  background: var(--brand-accent);
+  border-radius: 50%;
+  box-shadow: 0 0 8px var(--brand-accent);
+}
+
+.messageArea {
+  flex: 1;
+  padding: 1rem;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.messageWrapper {
+  display: flex;
+  gap: 1rem;
+  max-width: 85%;
+}
+
+.userWrapper {
+  align-self: flex-end;
+  flex-direction: row-reverse;
+}
+
+.botWrapper {
+  align-self: flex-start;
+}
+
+.avatar {
+  min-width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.userAvatar {
+  background: var(--brand-primary);
+  color: white;
+  box-shadow: var(--glow-primary);
+}
+
+.botAvatar {
+  background: var(--brand-secondary);
+  color: white;
+  box-shadow: var(--glow-secondary);
+}
+
+.messageBubble {
+  padding: 0.75rem 1rem;
+  border-radius: 12px;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: var(--text-primary);
+}
+
+.userBubble {
+  background: linear-gradient(135deg, rgba(74, 144, 226, 0.2), rgba(74, 144, 226, 0.1));
+  border: 1px solid rgba(74, 144, 226, 0.3);
+  border-top-right-radius: 4px;
+}
+
+.botBubble {
+  background: rgba(37, 42, 51, 0.7);
+  border: 1px solid var(--border-color);
+  border-top-left-radius: 4px;
+}
+
+.spinner {
+  animation: spin 1s linear infinite;
+  color: var(--text-secondary);
+}
+
+.inputArea {
+  padding: 0.75rem;
+  background: rgba(15, 17, 21, 0.8);
+  border-top: 1px solid var(--border-color);
+  display: flex;
+  gap: 0.5rem;
+}
+
+.input {
+  flex: 1;
+  background: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
+  padding: 0.5rem 0.75rem;
+  border-radius: 16px;
+  font-size: 0.9rem;
+  transition: all var(--transition-fast);
+}
+
+.input:focus {
+  outline: none;
+  border-color: var(--brand-primary);
+  box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.1);
+}
+
+.input::placeholder {
+  color: var(--text-placeholder);
+}
+
+.sendButton {
+  background: var(--brand-primary);
+  color: white;
+  border: none;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.sendButton:hover:not(:disabled) {
+  transform: scale(1.05);
+  box-shadow: var(--glow-primary);
+}
+
+.sendButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  background: var(--bg-tertiary);
+  color: var(--text-secondary);
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.markdown {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.markdown p {
+  margin: 0;
+  line-height: 1.5;
+}
+
+.markdown ul, .markdown ol {
+  margin: 0;
+  padding-left: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.markdown li {
+  line-height: 1.5;
+}
+
+.markdown strong {
+  font-weight: 600;
+  color: var(--brand-primary);
+}
