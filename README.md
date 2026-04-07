@@ -2,7 +2,6 @@
 
 Transform your raw meeting transcripts into structured decisions, automated action items, and cross-project intelligence with a professional, unified experience.
 
-![SmartMinutes Dashboard Preview](https://github.com/Meenakshi-prog15/Meeting-Intelligence-Hub/raw/main/preview.png)
 
 ## 🚀 Key Features
 
