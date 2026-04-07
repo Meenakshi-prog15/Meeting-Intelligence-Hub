@@ -1,9 +1,28 @@
+'use client';
+
+import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+import { User, LogOut } from 'lucide-react';
 import styles from './Header.module.css';
 
-export default function Header({ onNewAnalysis }) {
+export default function Header({ onNewAnalysis, onToggleView, onLogout }) {
+  const [user, setUser] = useState(null);
+  const router = useRouter();
+
+  useEffect(() => {
+    const storedUser = localStorage.getItem('smartMinutesUser');
+    if (storedUser) {
+      setUser(JSON.parse(storedUser));
+    }
+  }, []);
+
+  const handleLogout = () => {
+    onLogout?.();
+  };
+
   return (
     <header className={styles.header}>
-      <div className={styles.logoContainer}>
+      <div className={styles.logoContainer} onClick={() => onToggleView?.('landing')} style={{ cursor: 'pointer' }}>
         <svg 
           viewBox="0 0 24 24" 
           fill="none" 
@@ -19,7 +38,19 @@ export default function Header({ onNewAnalysis }) {
         </h1>
       </div>
       <nav className={styles.nav}>
+        {user && <button className={styles.navBtn} onClick={() => onToggleView?.('landing')}>Home</button>}
         <button className="btn-primary" onClick={onNewAnalysis}>New Analysis</button>
+        {user && (
+          <div className={styles.userSection}>
+            <div className={styles.userInfo}>
+              <User size={16} />
+              <span>{user.username}</span>
+            </div>
+            <button className={styles.logoutBtn} onClick={handleLogout} title="Sign Out">
+              <LogOut size={16} />
+            </button>
+          </div>
+        )}
       </nav>
     </header>
   );

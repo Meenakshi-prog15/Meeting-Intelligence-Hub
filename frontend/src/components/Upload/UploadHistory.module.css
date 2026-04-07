@@ -1,0 +1,298 @@
+/* ── Wrapper ──────────────────────────────────── */
+.wrapper {
+  max-width: 800px;
+  margin: 1rem auto 0;
+}
+
+/* ── Toggle Button ────────────────────────────── */
+.toggleBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: 8px;
+  padding: 0.42rem 0.85rem;
+  color: var(--text-secondary);
+  font-size: 0.78rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--transition-normal);
+  font-family: inherit;
+}
+
+.toggleBtn:hover {
+  background: rgba(74, 144, 226, 0.08);
+  border-color: rgba(74, 144, 226, 0.3);
+  color: var(--brand-primary);
+}
+
+.toggleIcon {
+  display: flex;
+  align-items: center;
+  opacity: 0.7;
+}
+
+.badge {
+  background: var(--brand-primary);
+  color: #fff;
+  font-size: 0.62rem;
+  font-weight: 700;
+  padding: 0.08rem 0.45rem;
+  border-radius: 999px;
+  line-height: 1.4;
+}
+
+.chevron {
+  display: flex;
+  align-items: center;
+  margin-left: 0.1rem;
+  opacity: 0.6;
+}
+
+/* ── Panel ────────────────────────────────────── */
+.panel {
+  margin-top: 0.55rem;
+  background: rgba(18, 21, 28, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 14px;
+  padding: 1.1rem 1.2rem;
+  animation: slideDown 0.2s ease-out;
+}
+
+/* ── Panel Header ─────────────────────────────── */
+.panelHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+  padding-bottom: 0.7rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.panelTitle {
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: var(--text-secondary);
+}
+
+.clearBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  background: rgba(255, 77, 77, 0.06);
+  border: 1px solid rgba(255, 77, 77, 0.18);
+  color: #ff6b6b;
+  font-size: 0.7rem;
+  font-weight: 500;
+  padding: 0.22rem 0.6rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  font-family: inherit;
+}
+
+.clearBtn:hover {
+  background: rgba(255, 77, 77, 0.15);
+  border-color: rgba(255, 77, 77, 0.35);
+}
+
+/* ── Empty State ──────────────────────────────── */
+.empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1.5rem 0;
+  color: var(--text-placeholder);
+  font-size: 0.8rem;
+}
+
+.emptyIcon {
+  opacity: 0.3;
+}
+
+/* ── Project List ─────────────────────────────── */
+.projectList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+/* ── Project Group ────────────────────────────── */
+.projectGroup {
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.projectToggle {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 10px;
+  padding: 0.6rem 0.85rem;
+  color: var(--text-primary);
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  font-family: inherit;
+  text-align: left;
+}
+
+.projectToggle:hover {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
+.projectDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.folderIcon {
+  color: var(--text-secondary);
+  flex-shrink: 0;
+}
+
+.projectName {
+  flex: 1;
+}
+
+.sessionCount {
+  font-size: 0.68rem;
+  font-weight: 400;
+  color: var(--text-placeholder);
+  margin-right: 0.2rem;
+}
+
+/* ── Session List ─────────────────────────────── */
+.sessionList {
+  margin-top: 0.35rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  padding-left: 0.9rem;
+  border-left: 2px solid rgba(255, 255, 255, 0.06);
+  margin-left: 0.8rem;
+}
+
+/* ── Session Card ─────────────────────────────── */
+.sessionCard {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 8px;
+  padding: 0.65rem 0.85rem;
+}
+
+/* ── Session Meta Bar ─────────────────────────── */
+.sessionMeta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.75rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.sessionMetaLeft {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+}
+
+.sessionMetaRight {
+  display: flex;
+  align-items: center;
+}
+
+.sessionMetaItem {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.72rem;
+  color: var(--text-placeholder);
+  font-weight: 500;
+}
+
+.viewBtn {
+  background: rgba(74, 144, 226, 0.1);
+  border: 1px solid rgba(74, 144, 226, 0.25);
+  color: var(--brand-primary);
+  font-size: 0.68rem;
+  font-weight: 600;
+  padding: 0.22rem 0.65rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  font-family: inherit;
+}
+
+.viewBtn:hover {
+  background: var(--brand-primary);
+  color: white;
+  box-shadow: 0 0 12px rgba(74, 144, 226, 0.4);
+}
+
+/* ── File Rows ────────────────────────────────── */
+.fileRows {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.fileRow {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.fileRowDot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--brand-primary);
+  opacity: 0.5;
+  flex-shrink: 0;
+}
+
+.fileRowName {
+  font-size: 0.78rem;
+  color: var(--text-primary);
+  font-weight: 500;
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.fileRowPills {
+  display: flex;
+  gap: 0.3rem;
+  flex-shrink: 0;
+}
+
+.pill {
+  font-size: 0.68rem;
+  color: var(--text-secondary);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 0.1rem 0.45rem;
+  border-radius: 5px;
+  white-space: nowrap;
+}
+
+/* ── Animations ───────────────────────────────── */
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}

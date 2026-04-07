@@ -3,25 +3,30 @@ import { Send, User, Bot, Loader2 } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
 import styles from './ChatInterface.module.css';
 
-export default function ChatInterface({ transcriptText }) {
+export default function ChatInterface({ transcripts }) {
   const [messages, setMessages] = useState([
     { role: 'assistant', content: 'Hello! I have analyzed the meeting transcript. What would you like to know?' }
   ]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const messagesEndRef = useRef(null);
+  const isInitialMount = useRef(true);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
 
   useEffect(() => {
+    if (isInitialMount.current) {
+      isInitialMount.current = false;
+      return;
+    }
     scrollToBottom();
   }, [messages]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!input.trim() || !transcriptText || isLoading) return;
+    if (!input.trim() || !transcripts || transcripts.length === 0 || isLoading) return;
 
     const userMsg = input.trim();
     setMessages(prev => [...prev, { role: 'user', content: userMsg }]);
@@ -32,7 +37,7 @@ export default function ChatInterface({ transcriptText }) {
       const response = await fetch('http://localhost:8000/query', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ question: userMsg, transcript: transcriptText })
+        body: JSON.stringify({ question: userMsg, transcripts: transcripts.map(t => ({ filename: t.filename, text: t.text })) })
       });
 
       if (!response.ok) throw new Error('Network response was not ok');
@@ -46,7 +51,7 @@ export default function ChatInterface({ transcriptText }) {
     }
   };
 
-  if (!transcriptText) {
+  if (!transcripts || transcripts.length === 0) {
     return (
         <div className={styles.emptyContainer}>
             <div className={styles.locked}>

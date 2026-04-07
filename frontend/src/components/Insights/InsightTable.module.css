@@ -101,6 +101,21 @@
   border: 1px solid rgba(155, 81, 224, 0.3);
 }
 
+.meetingTag {
+  display: inline-block;
+  font-size: 0.70rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  background-color: var(--background-secondary);
+  color: var(--text-secondary);
+  border: 1px solid var(--border-color);
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  font-weight: 600;
+  white-space: nowrap;
+  width: fit-content;
+}
+
 .deadline {
   color: var(--brand-accent);
   font-weight: 500;
