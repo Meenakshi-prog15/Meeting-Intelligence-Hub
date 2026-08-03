@@ -5,3 +5,14 @@ python-dotenv
 pydantic
 sqlalchemy
 aiosqlite
+passlib[bcrypt]
+bcrypt==3.2.2
+python-jose[cryptography]
+slowapi
+asyncpg
+psycopg2-binary
+pgvector
+celery
+redis
+fastapi-cache2[redis]
+jinja2

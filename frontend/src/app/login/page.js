@@ -31,11 +31,16 @@ export default function AuthPage() {
       const data = await response.json();
 
       if (!response.ok) {
+        // FastAPI validation errors return detail as an array of objects
+        if (Array.isArray(data.detail)) {
+          throw new Error(data.detail.map(e => e.msg).join(', '));
+        }
         throw new Error(data.detail || 'Authentication failed');
       }
 
       // Success! Store user and redirect
       localStorage.setItem('smartMinutesUser', JSON.stringify(data));
+      localStorage.setItem('smartMinutesToken', data.access_token);
       router.push('/dashboard');
     } catch (err) {
       setError(err.message);
@@ -77,11 +82,11 @@ export default function AuthPage() {
           {error && <div className={styles.error}>{error}</div>}
 
           <div className={styles.inputGroup}>
-            <label className={styles.label}>Username or Email</label>
+            <label className={styles.label}>Username</label>
             <input
               type="text"
               className={styles.input}
-              placeholder="Enter your username"
+              placeholder="e.g. amy123 (letters and numbers only)"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
               required

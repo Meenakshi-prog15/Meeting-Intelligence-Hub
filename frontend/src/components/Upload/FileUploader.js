@@ -2,6 +2,7 @@
 
 import { useState, useCallback } from 'react';
 import { UploadCloud, FileText, FolderOpen, Loader2 } from 'lucide-react';
+import { pollTaskStatus } from '../../lib/api';
 import styles from './FileUploader.module.css';
 
 const ALLOWED_EXTENSIONS = ['.txt', '.vtt'];
@@ -76,7 +77,13 @@ export default function FileUploader({ onFilesProcessed }) {
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ text, filename: file.name }),
         });
-        const summary = summaryRes.ok ? await summaryRes.json() : null;
+        let summary = null;
+        if (summaryRes.ok) {
+          const summaryData = await summaryRes.json();
+          if (summaryData.task_id) {
+            summary = await pollTaskStatus(summaryData.task_id);
+          }
+        }
 
         setStatusText(`Analyzing sentiment for ${file.name}…`);
         const sentimentRes = await fetch('http://localhost:8000/sentiment', {
@@ -84,7 +91,13 @@ export default function FileUploader({ onFilesProcessed }) {
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ text, filename: file.name }),
         });
-        const sentiment = sentimentRes.ok ? await sentimentRes.json() : null;
+        let sentiment = null;
+        if (sentimentRes.ok) {
+          const sentimentData = await sentimentRes.json();
+          if (sentimentData.task_id) {
+            sentiment = await pollTaskStatus(sentimentData.task_id);
+          }
+        }
 
         transcriptsData.push({
           filename: file.name,

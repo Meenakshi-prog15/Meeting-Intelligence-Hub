@@ -3,7 +3,8 @@
 import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { History, ChevronDown, ChevronRight, LayoutDashboard, FileText, LucideLayout } from 'lucide-react';
+import { History, ChevronDown, ChevronRight, FileText, Brain, MessageSquare, BarChart2, Upload, LayoutDashboard, Share2 } from 'lucide-react';
+import { pollTaskStatus } from '../lib/api';
 
 // Dashboard Components
 import Header from '../components/Header/Header';
@@ -19,46 +20,40 @@ import dashStyles from './dashboard/page.module.css';
 
 const FEATURES = [
   {
-    icon: '🧠',
+    icon: Brain,
     title: 'AI-Powered Extraction',
     description:
       'Automatically identify decisions, action items, deadlines, and owners from any meeting transcript using large language models.',
-    gradient: 'from-blue to-purple',
   },
   {
-    icon: '💬',
+    icon: MessageSquare,
     title: 'Interactive Q&A',
     description:
       'Ask natural language questions across all your uploaded meetings. Get cited, accurate answers with speaker context.',
-    gradient: 'from-cyan to-blue',
   },
   {
-    icon: '🎭',
+    icon: BarChart2,
     title: 'Sentiment Analysis',
     description:
       'Visualise speaker tone and emotional patterns throughout the meeting — understand who was engaged, cautious, or enthusiastic.',
-    gradient: 'from-purple to-pink',
   },
   {
-    icon: '📁',
+    icon: Upload,
     title: 'Multi-File Upload',
     description:
       'Drag-and-drop multiple .TXT or .VTT transcripts at once. Each file is validated, summarised, and cross-referenced instantly.',
-    gradient: 'from-mint to-cyan',
   },
   {
-    icon: '📊',
+    icon: LayoutDashboard,
     title: 'Cross-Meeting Dashboard',
     description:
       'Aggregate stats across meetings — total decisions, action items, word counts, and speaker breakdown all in one place.',
-    gradient: 'from-blue to-cyan',
   },
   {
-    icon: '📤',
+    icon: Share2,
     title: 'Export & Share',
     description:
       'Export extracted insights as structured data. Share decision logs from individual meetings or the full cross-project view.',
-    gradient: 'from-purple to-blue',
   },
 ];
 
@@ -121,7 +116,10 @@ export default function UnifiedPage() {
   const fetchHistory = async () => {
     if (!user) return;
     try {
-      const response = await fetch(`http://localhost:8000/history?user_id=${user.id}`);
+      const token = localStorage.getItem('smartMinutesToken');
+      const response = await fetch(`http://localhost:8000/history?user_id=${user.id}`, {
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
       if (response.ok) {
         const data = await response.json();
         setHistory(data);
@@ -136,9 +134,13 @@ export default function UnifiedPage() {
     setIsExtracting(true);
     setExtractionError(null);
     try {
+      const token = localStorage.getItem('smartMinutesToken');
       const response = await fetch('http://localhost:8000/extract', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
         body: JSON.stringify({
           transcripts: filesData.map(f => ({ 
             filename: f.filename, 
@@ -156,8 +158,10 @@ export default function UnifiedPage() {
         throw new Error(errData.detail || errData.error || 'Failed to extract insights.');
       }
 
-      const data = await response.json();
-      setInsights(data);
+      const initialData = await response.json();
+      const insightsData = await pollTaskStatus(initialData.task_id);
+      
+      setInsights({ ...insightsData, session_id: initialData.session_id });
       setTimeout(() => {
         topDashboardRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }, 100);
@@ -181,7 +185,10 @@ export default function UnifiedPage() {
     setIsExtracting(true);
     setExtractionError(null);
     try {
-      const response = await fetch(`http://localhost:8000/history/${sessionId}`);
+      const token = localStorage.getItem('smartMinutesToken');
+      const response = await fetch(`http://localhost:8000/history/${sessionId}`, {
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
       if (!response.ok) throw new Error('Failed to load session');
       const data = await response.json();
       
@@ -206,10 +213,10 @@ export default function UnifiedPage() {
   };
 
   const navItems = [
-    { id: 'summary',   label: '📊 Summary' },
-    { id: 'insights',  label: '💡 Key Insights' },
-    { id: 'qa',        label: '💬 Interactive QA' },
-    { id: 'sentiment', label: '🎭 Sentiment' },
+    { id: 'summary',   label: 'Summary' },
+    { id: 'insights',  label: 'Key Insights' },
+    { id: 'qa',        label: 'Interactive QA' },
+    { id: 'sentiment', label: 'Sentiment' },
   ];
 
   const hasResults = transcriptsData.length > 0 && insights;
@@ -420,7 +427,7 @@ export default function UnifiedPage() {
         <div className={styles.featuresGrid}>
           {FEATURES.map((f) => (
             <div key={f.title} className={styles.featureCard}>
-              <span className={styles.featureIcon}>{f.icon}</span>
+              <f.icon size={24} className={styles.featureIcon} />
               <h3 className={styles.featureTitle}>{f.title}</h3>
               <p className={styles.featureDesc}>{f.description}</p>
             </div>

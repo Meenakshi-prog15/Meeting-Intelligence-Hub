@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { Send, User, Bot, Loader2 } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
+import { pollTaskStatus } from '../../lib/api';
 import styles from './ChatInterface.module.css';
 
 export default function ChatInterface({ transcripts }) {
@@ -34,16 +35,23 @@ export default function ChatInterface({ transcripts }) {
     setIsLoading(true);
 
     try {
+      const token = localStorage.getItem('smartMinutesToken');
       const response = await fetch('http://localhost:8000/query', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
         body: JSON.stringify({ question: userMsg, transcripts: transcripts.map(t => ({ filename: t.filename, text: t.text })) })
       });
 
       if (!response.ok) throw new Error('Network response was not ok');
 
-      const data = await response.json();
-      setMessages(prev => [...prev, { role: 'assistant', content: data.answer }]);
+      const initialData = await response.json();
+      const answer = await pollTaskStatus(initialData.task_id);
+      
+      const finalContent = typeof answer === 'string' ? answer : answer?.answer || JSON.stringify(answer);
+      setMessages(prev => [...prev, { role: 'assistant', content: finalContent }]);
     } catch (error) {
       setMessages(prev => [...prev, { role: 'assistant', content: 'Sorry, I encountered an error while processing your request.' }]);
     } finally {
